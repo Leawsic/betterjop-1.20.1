@@ -1,0 +1,12 @@
+{
+    "text.autoconfig.betterjop.title": "Better JoP 配置",
+    "text.autoconfig.betterjop.option.removalDelayInTicks": "投影移除延迟（游戏刻）",
+    "text.autoconfig.betterjop.option.removalDelayInTicks.@Tooltip": "当手中没有画布时，等待多少刻后移除投影（20刻 = 1秒）",
+    "text.autoconfig.betterjop.option.detectionMode": "画布检测范围",
+    "text.autoconfig.betterjop.option.detectionMode.@Tooltip": "选择如何检测手中是否有画布",
+    "text.autoconfig.betterjop.option.persistenceEnabled": "启用投影数据持久化",
+    "text.autoconfig.betterjop.option.persistenceEnabled.@Tooltip": "退出服务器时保存投影位置，下次进入时自动恢复",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.MAIN_HAND_ONLY": "仅主手",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.MAIN_HAND_AND_OFFHAND": "主手和副手",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.FULL_INVENTORY": "整个背包"
+}

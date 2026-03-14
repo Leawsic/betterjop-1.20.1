@@ -1,0 +1,12 @@
+{
+    "text.autoconfig.betterjop.title": "Better JoP Config",
+    "text.autoconfig.betterjop.option.removalDelayInTicks": "Projection removal delay (tick)",
+    "text.autoconfig.betterjop.option.removalDelayInTicks.@Tooltip": "Wait for how many ticks before removing projection when there're no canvases in hand",
+    "text.autoconfig.betterjop.option.detectionMode": "Canvas detection mode",
+    "text.autoconfig.betterjop.option.detectionMode.@Tooltip": "Choose how to detect the existence of canvases",
+    "text.autoconfig.betterjop.option.persistenceEnabled": "Enable projection persistence",
+    "text.autoconfig.betterjop.option.persistenceEnabled.@Tooltip": "Save the projection position when exiting the server and automatically restore it the next time you enter",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.MAIN_HAND_ONLY": "Main-hand Only",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.MAIN_HAND_AND_OFFHAND": "Main and off hand",
+    "enum.site.leawsic.betterjop.config.ModConfig.DetectionMode.FULL_INVENTORY": "Whole inventory"
+}

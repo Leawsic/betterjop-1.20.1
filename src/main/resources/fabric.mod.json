@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "betterjop",
+	"version": "${version}",
+	"name": "BetterJoP",
+	"description": "Adds a real-time projection when holding a canvas,allowing you to paint while viewing it on the wall.",
+	"authors": [
+		"Leawsic"
+	],
+	"contact": {
+		"homepage": "https://blog.leawsic.site/",
+		"sources": "https://github.com/Leawsic"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/betterjop/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"site.leawsic.betterjop.BetterJoP"
+		],
+        "client": [
+            "site.leawsic.betterjop.BetterJoPClient"
+        ],
+        "modmenu": [
+            "site.leawsic.betterjop.ModMenuIntegration"
+        ]
+	},
+	"mixins": [
+		"betterjop.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+        "cloth-config": ">=11.1.136"
+	},
+    "contributors": [
+        "Digital Board"
+    ],
+    "recommends": {
+        "modmenu": "*"
+    }
+}
