@@ -16,7 +16,6 @@ import org.joml.Matrix4f;
 
 public class RenderCanvasProjection extends EntityRenderer<CanvasProjection> {
     private static final ResourceLocation BACK_LOCATION = new ResourceLocation(ResourceLocation.DEFAULT_NAMESPACE, "textures/block/birch_planks.png");
-    public static final String bgTextureResourcePath=BACK_LOCATION.toString();
 
     public RenderCanvasProjection(EntityRendererProvider.Context ctx) {
         super(ctx);

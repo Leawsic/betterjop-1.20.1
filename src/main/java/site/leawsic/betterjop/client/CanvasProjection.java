@@ -198,18 +198,6 @@ public class CanvasProjection extends Entity {
         return stack.getItem() instanceof ItemCanvas && stack.hasTag() && name.equals(stack.getTag().getString("name"));
     }
 
-    public String getCanvasName() {
-        return canvasName;
-    }
-
-    public CanvasType getCanvasType() {
-        return canvasType;
-    }
-
-    public int[] getPixels() {
-        return pixels;
-    }
-
     public int getWidth() {
         return width;
     }

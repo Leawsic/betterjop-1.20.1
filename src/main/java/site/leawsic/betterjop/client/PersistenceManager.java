@@ -69,8 +69,7 @@ public class PersistenceManager {
         if (file == null || !file.exists()) return new HashMap<>();
 
         try (FileReader reader = new FileReader(file)) {
-            Type type = new TypeToken<Map<String, SavedCanvasInfo>>() {
-            }.getType();
+            Type type = new TypeToken<Map<String, SavedCanvasInfo>>() {}.getType();
             Map<String, SavedCanvasInfo> loaded = GSON.fromJson(reader, type);
             if (loaded == null) return new HashMap<>();
 

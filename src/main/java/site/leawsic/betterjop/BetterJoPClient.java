@@ -33,7 +33,6 @@ public class BetterJoPClient implements ClientModInitializer {
         CANVAS_PROJECTION_TYPE = Registry.register(
                 BuiltInRegistries.ENTITY_TYPE,
                 new ResourceLocation(BetterJoP.MOD_ID, "canvas_projection"),
-                //todo ASK 为什么此处可以这样写而不可以先泛型再create 有何不同 又分别代表什么意思
                 FabricEntityTypeBuilder.<CanvasProjection>create(MobCategory.MISC, CanvasProjection::new)
                         .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
                         .trackRangeChunks(4)          // 追踪范围（可选）
