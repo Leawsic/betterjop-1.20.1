@@ -127,7 +127,6 @@ public class CanvasProjection extends Entity {
             tickCount++;
             int delay = ModConfigManager.getConfig().removalDelayInTicks;
             if (tickCount > delay) {
-                BetterJoP.LOGGER.error("Tick out: REMOVE");
                 this.remove(RemovalReason.DISCARDED);
             }
             return;
