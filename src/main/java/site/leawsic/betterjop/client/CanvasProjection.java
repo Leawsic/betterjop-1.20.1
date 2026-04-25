@@ -25,7 +25,6 @@ import java.util.UUID;
 
 public class CanvasProjection extends Entity {
     private String canvasName;
-    private CanvasType canvasType;
     private int[] pixels;
     private int width, height;
     private int version;
@@ -48,9 +47,8 @@ public class CanvasProjection extends Entity {
         this.facing = facing;
         this.rotation = rotation;
         this.canvasName = name;
-        this.canvasType = type;
-        this.width = CanvasType.getWidth(type);
-        this.height = CanvasType.getHeight(type);
+        this.width = type.getWidth();
+        this.height = type.getHeight();
         this.version = version;
         this.pixels = pixels.clone();
 

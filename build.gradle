@@ -25,7 +25,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // jop
-    modImplementation files("libs/xercapaint-fabric-1.20.1-1.0.0.jar")
+    //modImplementation files("libs/xercapaint-fabric-1.20.1-1.0.0.jar")
+    modImplementation files("libs/xercapaint.TIMAVICIIX_REBUILD_1.0.-fabric-1.20.1-1.0.0.jar")
 
     //cloth config & mod menu
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:11.1.136") {
