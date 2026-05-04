@@ -41,14 +41,21 @@ public class PersistenceManager {
         return new File(PROJECTIONS_DIR, id + ".json");
     }
 
-    // 保存所有投影信息
-    public static void saveProjections(Map<String, ProjectionManager.CanvasInfo> canvasInfos) {
+    public static void saveProjections(Map<String, ProjectionManager.CanvasInfo> allCanvasInfos) {
         if (!ModConfigManager.getConfig().persistenceEnabled) return;
         File file = getSaveFile();
         if (file == null) return;
 
+        // 只保存当前活跃的投影 即正在显示的
+        Map<String, ProjectionManager.CanvasInfo> activeInfos = ProjectionManager.getActiveCanvasInfos();
+        if (activeInfos.isEmpty()) {
+            if (file.exists()) file.delete();
+            BetterJoP.LOGGER.info("[BetterJoP] No active projections, deleted save file");
+            return;
+        }
+
         Map<String, SavedCanvasInfo> toSave = new HashMap<>();
-        for (var entry : canvasInfos.entrySet()) {
+        for (var entry : activeInfos.entrySet()) {
             String name = entry.getKey();
             var info = entry.getValue();
             toSave.put(name, new SavedCanvasInfo(name, info.x(), info.y(), info.z(), info.facing(), info.rotation()));
@@ -56,20 +63,20 @@ public class PersistenceManager {
 
         try (FileWriter writer = new FileWriter(file)) {
             GSON.toJson(toSave, writer);
-            BetterJoP.LOGGER.info("[BetterJoP] Saved {} projections to {}", toSave.size(), file);
+            BetterJoP.LOGGER.info("[BetterJoP] Saved {} active projections to {}", toSave.size(), file);
         } catch (IOException e) {
             BetterJoP.LOGGER.error("Failed to save projections", e);
         }
     }
 
-    // 加载投影信息
     public static Map<String, ProjectionManager.CanvasInfo> loadProjections() {
         if (!ModConfigManager.getConfig().persistenceEnabled) return new HashMap<>();
         File file = getSaveFile();
         if (file == null || !file.exists()) return new HashMap<>();
 
         try (FileReader reader = new FileReader(file)) {
-            Type type = new TypeToken<Map<String, SavedCanvasInfo>>() {}.getType();
+            Type type = new TypeToken<Map<String, SavedCanvasInfo>>() {
+            }.getType();
             Map<String, SavedCanvasInfo> loaded = GSON.fromJson(reader, type);
             if (loaded == null) return new HashMap<>();
 
@@ -85,6 +92,10 @@ public class PersistenceManager {
             BetterJoP.LOGGER.error("Failed to load projections", e);
             return new HashMap<>();
         }
+    }
+
+    public static File getSaveFileForDebug() {
+        return getSaveFile();
     }
 
     public static class SavedCanvasInfo {
