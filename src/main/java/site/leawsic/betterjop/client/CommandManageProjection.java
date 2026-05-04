@@ -44,7 +44,6 @@ public class CommandManageProjection {
             ProjectionManager.CanvasInfo info = entry.getValue();
             String coordText = String.format("x=%.1f, y=%.1f, z=%.1f", info.x(), info.y(), info.z());
 
-            // 使用 Style 构建带悬浮的组件
             Style style = Style.EMPTY
                     .withColor(ChatFormatting.GRAY)
                     .withUnderlined(true)
@@ -71,7 +70,16 @@ public class CommandManageProjection {
     }
 
     private static int reloadProjections() {
+        // 检查是否有有效的持久化文件
+        if (!PersistenceManager.hasSaveFile()) {
+            sendMessage(Component.literal("没有找到有效的持久化文件，未执行操作。").withStyle(ChatFormatting.YELLOW));
+            return 0;
+        }
         var loaded = PersistenceManager.loadProjections();
+        if (loaded.isEmpty()) {
+            sendMessage(Component.literal("持久化文件为空，未执行操作。").withStyle(ChatFormatting.YELLOW));
+            return 0;
+        }
         ProjectionManager.restoreProjections(loaded);
         sendMessage(Component.literal("已重新加载投影持久化数据，共 " + loaded.size() + " 条记录。").withStyle(ChatFormatting.GREEN));
         return loaded.size();

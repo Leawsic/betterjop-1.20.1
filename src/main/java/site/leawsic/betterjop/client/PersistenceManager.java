@@ -41,6 +41,11 @@ public class PersistenceManager {
         return new File(PROJECTIONS_DIR, id + ".json");
     }
 
+    public static boolean hasSaveFile() {
+        File file = getSaveFile();
+        return file != null && file.exists() && file.length() > 0;
+    }
+
     public static void saveProjections(Map<String, ProjectionManager.CanvasInfo> allCanvasInfos) {
         if (!ModConfigManager.getConfig().persistenceEnabled) return;
         File file = getSaveFile();
