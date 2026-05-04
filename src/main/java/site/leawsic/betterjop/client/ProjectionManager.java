@@ -19,11 +19,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ProjectionManager {
-    // 使用 ConcurrentHashMap 确保线程安全
     private static final Map<String, CanvasInfo> canvasInfos = new ConcurrentHashMap<>();
     private static final Map<String, CanvasProjection> activeProjections = new ConcurrentHashMap<>();
-
-    public record CanvasInfo(double x, double y, double z, Direction facing, int rotation) {}
 
     public static void onCanvasRemoved(String canvasName, double x, double y, double z, Direction facing, int rotation) {
         canvasInfos.put(canvasName, new CanvasInfo(x, y, z, facing, rotation));
@@ -45,7 +42,6 @@ public class ProjectionManager {
 
         Set<String> namesInRange = getCanvasNamesInRange(player);
 
-        // 遍历所有已记录位置的画布
         Iterator<Map.Entry<String, CanvasInfo>> it = canvasInfos.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, CanvasInfo> entry = it.next();
@@ -69,7 +65,6 @@ public class ProjectionManager {
                             activeProjections.put(name, projection);
                         }
                     } else {
-                        // 找不到物品则移除记录
                         it.remove();
                         BetterJoP.LOGGER.warn("[BetterJoP] Canvas item not found for recorded name: {}", name);
                     }
@@ -118,13 +113,51 @@ public class ProjectionManager {
         return null;
     }
 
-    // 供持久化使用的方法
+    // === 新增管理方法 ===
     public static Map<String, CanvasInfo> getCanvasInfos() {
         return new ConcurrentHashMap<>(canvasInfos);
+    }
+
+    public static Set<String> getActiveProjectionNames() {
+        return activeProjections.keySet();
+    }
+
+    /**
+     * 返回当前活跃投影（正在显示）的 CanvasInfo，用于持久化保存。
+     */
+    public static Map<String, CanvasInfo> getActiveCanvasInfos() {
+        Map<String, CanvasInfo> active = new ConcurrentHashMap<>();
+        for (String name : activeProjections.keySet()) {
+            CanvasInfo info = canvasInfos.get(name);
+            if (info != null) {
+                active.put(name, info);
+            }
+        }
+        return active;
+    }
+
+    public static void removeProjection(String canvasName) {
+        canvasInfos.remove(canvasName);
+        CanvasProjection proj = activeProjections.remove(canvasName);
+        if (proj != null) {
+            proj.remove(Entity.RemovalReason.DISCARDED);
+        }
+    }
+
+    public static void clearAllProjections() {
+        for (CanvasProjection proj : activeProjections.values()) {
+            proj.remove(Entity.RemovalReason.DISCARDED);
+        }
+        canvasInfos.clear();
+        activeProjections.clear();
     }
 
     public static void restoreProjections(Map<String, CanvasInfo> loaded) {
         canvasInfos.clear();
         canvasInfos.putAll(loaded);
+        // 此处不重建 activeProjections 等待 tick 自然重建
+    }
+
+    public record CanvasInfo(double x, double y, double z, Direction facing, int rotation) {
     }
 }
