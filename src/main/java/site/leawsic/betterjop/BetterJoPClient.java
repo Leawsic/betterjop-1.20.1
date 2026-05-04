@@ -3,10 +3,10 @@ package site.leawsic.betterjop;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +29,7 @@ public class BetterJoPClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         // debug command register
-        CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> CommandManageProjection.register(commandDispatcher));
+        ClientCommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext) -> CommandManageProjection.register(commandDispatcher));
 
         CANVAS_PROJECTION_TYPE = Registry.register(
                 BuiltInRegistries.ENTITY_TYPE,
