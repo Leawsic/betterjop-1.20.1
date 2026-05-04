@@ -2,10 +2,9 @@ package site.leawsic.betterjop.client;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
@@ -13,19 +12,22 @@ import net.minecraft.network.chat.Style;
 import java.io.File;
 import java.util.Map;
 
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+
 public class CommandManageProjection {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("projection")
-                .then(Commands.literal("list")
+    public static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
+        dispatcher.register(literal("projection")
+                .then(literal("list")
                         .executes(ctx -> listProjections()))
-                .then(Commands.literal("clear")
-                        .then(Commands.argument("name", StringArgumentType.string())
+                .then(literal("clear")
+                        .then(argument("name", StringArgumentType.string())
                                 .executes(ctx -> clearProjection(StringArgumentType.getString(ctx, "name"))))
-                        .then(Commands.literal("all")
+                        .then(literal("all")
                                 .executes(ctx -> clearAllProjections())))
-                .then(Commands.literal("reload")
+                .then(literal("reload")
                         .executes(ctx -> reloadProjections()))
-                .then(Commands.literal("debug")
+                .then(literal("debug")
                         .executes(ctx -> debugInfo()))
         );
     }
